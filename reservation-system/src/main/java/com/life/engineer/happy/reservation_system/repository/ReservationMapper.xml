@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.life.engineer.happy.reservation_system.mapper.ReservationMapper">
+
+    <!-- すべての予約を取得 -->
+    <select id="findAll" resultType="com.life.engineer.happy.reservation_system.model.Reservation">
+        SELECT * FROM reservations
+    </select>
+
+    <!-- IDで特定の予約を取得 -->
+    <select id="findById" parameterType="Long" resultType="com.life.engineer.happy.reservation_system.model.Reservation">
+        SELECT * FROM reservations WHERE id = #{id}
+    </select>
+
+    <!-- 新しい予約を作成 -->
+    <insert id="insert" parameterType="com.life.engineer.happy.reservation_system.model.Reservation" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO reservations (customer_name, customer_email, reservation_date, reservation_status)
+        VALUES (#{customerName}, #{customerEmail}, #{reservationDate}, #{reservationStatus})
+    </insert>
+
+    <!-- 既存の予約を更新 -->
+    <update id="update" parameterType="com.life.engineer.happy.reservation_system.model.Reservation">
+        UPDATE reservations
+        SET customer_name = #{customerName},
+            customer_email = #{customerEmail},
+            reservation_date = #{reservationDate},
+            reservation_status = #{reservationStatus}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 予約を削除 -->
+    <delete id="delete" parameterType="Long">
+        DELETE FROM reservations WHERE id = #{id}
+    </delete>
+
+</mapper>
